@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #83c0ce;
+            /* Background color for the entire page */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        
+        #registration-form {
+            background-color: #b64edc;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 12px;
+        }
+        
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+        
+        .gender-container {
+            margin-bottom: 16px;
+        }
+        
+        .gender-label {
+            display: inline-block;
+            margin-right: 12px;
+        }
+        
+        .gender-radio {
+            display: none;
+        }
+        
+        .custom-radio {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #3498db;
+            border-radius: 50%;
+            position: relative;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        
+        .custom-radio::after {
+            content: '';
+            display: block;
+            width: 12px;
+            height: 12px;
+            background-color: #3498db;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.2s ease-in-out;
+        }
+        
+        .gender-radio:checked+.custom-radio::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .checkbox-container {
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .checkbox-label {
+            display: inline-block;
+            margin-right: 8px;
+            font-size: 14px;
+        }
+        
+        .checkbox-label input {
+            margin-right: 4px;
+        }
+        
+        button {
+            width: 48%;
+            padding: 14px;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        #enroll-btn {
+            background-color: #3498db;
+            margin-right: 2%;
+        }
+        
+        #clear-btn {
+            background-color: #e74c3c;
+        }
+        
+        #display-data {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="registration-form">
+        <h2>Registration Form</h2>
+        <form id="myForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="website">Website:</label>
+            <input type="text" id="website" name="website" required>
+
+            <label for="imageLink">Image Link:</label>
+            <input type="text" id="imageLink" name="imageLink" required>
+
+            <div class="gender-container">
+                <label>Gender:</label>
+                <label class="gender-label" for="male">
+                <input type="radio" id="male" name="gender" class="gender-radio" value="Male" required>
+                <div class="custom-radio"></div> Male
+            </label>
+                <label class="gender-label" for="female">
+                <input type="radio" id="female" name="gender" class="gender-radio" value="Female" required>
+                <div class="custom-radio"></div> Female
+            </label>
+            </div>
+
+            <div class="checkbox-container">
+                <label>Skills:</label>
+                <label class="checkbox-label" for="java">
+                <input type="checkbox" id="java" name="skills" value="Java"> Java
+            </label>
+                <label class="checkbox-label" for="html">
+                <input type="checkbox" id="html" name="skills" value="HTML"> HTML
+            </label>
+                <label class="checkbox-label" for="css">
+                <input type="checkbox" id="css" name="skills" value="CSS"> CSS
+            </label>
+            </div>
+
+            <button type="button" id="enroll-btn" onclick="submitForm()">Enroll Student</button>
+            <button type="button" id="clear-btn" onclick="clearForm()">Clear</button>
+        </form>
+
+        <div id="display-data"></div>
+    </div>
+
+    <script>
+        function submitForm() {
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var website = document.getElementById("website").value;
+            var imageLink = document.getElementById("imageLink").value;
+            var gender = document.querySelector('input[name="gender"]:checked').value;
+            var skills = [];
+            var skillsCheckboxes = document.getElementsByName("skills");
+            skillsCheckboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    skills.push(checkbox.value);
+                }
+            });
+
+            var displayData = document.getElementById("display-data");
+            displayData.innerHTML = "<h3>Entered Data:</h3>" +
+                "<p><strong>Name:</strong> " + name + "</p>" +
+                "<p><strong>Email:</strong> " + email + "</p>" +
+                "<p><strong>Website:</strong> " + website + "</p>" +
+                "<p><strong>Image Link:</strong> " + imageLink + "</p>" +
+                "<p><strong>Gender:</strong> " + gender + "</p>" +
+                "<p><strong>Skills:</strong> " + skills.join(", ") + "</p>";
+        }
+
+        function clearForm() {
+            document.getElementById("myForm").reset();
+            document.getElementById("display-data").innerHTML = "";
+        }
+    </script>
+
+</body>
+
+</html>
